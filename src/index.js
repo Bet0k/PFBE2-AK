@@ -2,7 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import cookieParser from "cookie-parser";
 import passport from "passport";
-import './passport/passport.config.js';  // Aquí solo importas la configuración de passport
+import './passport/passport.config.js';
 
 import connectDb from "./database/index.js";
 import userRoutes from "./routes/users.routes.js";
@@ -19,8 +19,8 @@ app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
 // middlewares
-app.use(cookieParser(signCookie));  // Aquí configuras cookie-parser
-app.use(passport.initialize());  // Inicializas passport después
+app.use(cookieParser(signCookie));
+app.use(passport.initialize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));

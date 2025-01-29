@@ -36,19 +36,17 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    email: email,  // Use the form input values
-                    password: password  // Use the form input values
+                    email: email,
+                    password: password
                 }),
-                credentials: 'include' // Include cookies (if any)
+                credentials: 'include'
             })
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    // Token is stored in the cookie automatically if set by backend
                     console.log('Login successful:', data.message);
                     
-                    // Redirigir a /profile o alguna otra página
-                    window.location.href = 'http://localhost:3000/api/users/profile';  // Ajusta la redirección si es necesario
+                    window.location.href = 'http://localhost:3000/api/users/profile';
                 } else {
                     console.error('Error:', data.message);
                 }
