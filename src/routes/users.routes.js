@@ -41,9 +41,7 @@ router.post('/register', async (req, res) => {
         if(role) newUser.role = role;
         
         await usersModel.create(newUser);
-
-         res.status(201).json({ status: "success", payload: newUser })
-        //res.redirect('/login');
+        return res.status(201).json({ status: "success", payload: newUser });
 
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message })
@@ -84,8 +82,6 @@ router.get('/profile', (req, res, next) => {
 }, passport.authenticate('jwt', { session: false }), (req, res) => {
     res.render('profile', { user: req.user });
 });
-
-
 
 router.get('/current', (req, res) => {
     const token = req.cookies['token'];
