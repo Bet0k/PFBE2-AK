@@ -4,7 +4,6 @@ import { JWT_SECRET } from '../utils/index.js';
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import usersModel from '../models/users.model.js';
 
-
 const clientGoogle = "892733688998-e8fdaqpoe9655h99l0u7dje83r05l2as.apps.googleusercontent.com";
 const secretGoogle = "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";
 
