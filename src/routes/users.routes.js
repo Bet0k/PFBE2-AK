@@ -100,5 +100,12 @@ router.get('/current', (req, res) => {
     res.status(200).json({ status: 'success', user: decoded.user });
 });
 
+router.get('/auth/google', passport.authenticate('google', {scope: [ "email", "profile" ] }));
+
+router.get('/api/users/auth/google/callback', 
+    passport.authenticate('google', {
+        successRedirect: '/profile',
+    })
+);
 
 export default router;
