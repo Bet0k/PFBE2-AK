@@ -48,6 +48,13 @@ export const checkAdminOrOwner = async (req, res, next) => {
     try {
         const order = await orderService.getOrderById(oid);
 
+        if(!order){
+            return res.status(404).json({
+                status: "error",
+                message: "No existe la orden con el id indicado."
+            })
+        }
+
         if (user.role === "admin" || user.id === order.user.id.toString()) {
             return next();
         }
