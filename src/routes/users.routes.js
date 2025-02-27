@@ -9,10 +9,11 @@ import {
     getProfile,
     getCurrentUser
 } from "../controllers/user.controller.js";
+import { checkAdminRole } from "../utils/index.js";
 
 const router = Router()
 
-router.get('/', getUsers);
+router.get('/', checkAdminRole, getUsers);
 
 router.post('/register', createUser);
 
