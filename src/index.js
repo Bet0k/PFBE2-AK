@@ -1,36 +1,47 @@
 import express from "express";
-import { engine } from "express-handlebars";
+import {
+    engine
+} from "express-handlebars";
 import cookieParser from "cookie-parser";
 import passport from "passport";
+import dotenv from "dotenv";
 import './passport/passport.config.js';
-
 import connectDb from "./database/index.js";
 import userRoutes from "./routes/users.routes.js";
+import businessRoutes from "./routes/business.router.js";
+import orderRoutes from "./routes/orders.router.js";
 import viewRoutes from "./routes/views.routes.js";
 
-const signCookie = "sign-cookie";
-const mongodbUri = 'mongodb+srv://beto:1234@cluster0.g5rqp.mongodb.net/pruebas';
+dotenv.config();
 
-//settings
+// Configuración de variables de entorno
+const PORT = process.env.PORT || 3000;
+const SIGN_COOKIE = process.env.SIGN_COOKIE;
+const MONGODB_URI = process.env.MONGODB_URI;
+
+// Configuración del servidor
 const app = express();
-app.set("PORT", 3000);
+app.set("PORT", PORT);
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
-// middlewares
-app.use(cookieParser(signCookie));
+// Middlewares
+app.use(cookieParser(SIGN_COOKIE));
 app.use(passport.initialize());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
 app.use(express.static("public"));
 
-//routes
-app.use('/api/users', userRoutes);
+// Rutas
+app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/business", businessRoutes);
 app.use('/', viewRoutes);
 
-//listeners
-connectDb(mongodbUri);
-app.listen(app.get("PORT"), () => {
-  console.log(`Server on port http://localhost:${app.get("PORT")}`);
+connectDb(MONGODB_URI);
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });
