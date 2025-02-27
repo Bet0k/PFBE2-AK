@@ -163,10 +163,12 @@ export const createOrder = async (req, res) => {
             totalPrice,
         };
 
+        console.log(order);
+        
         const orderResult = await orderService.createOrder(order);
 
         const reorderedOrderResult = {
-            order_id: order._id,
+            order_id: orderResult._id,
             number: order.number,
             status: order.status,
             user: {
@@ -178,6 +180,8 @@ export const createOrder = async (req, res) => {
             totalPrice: order.totalPrice,
         };
 
+        console.log(reorderedOrderResult);
+        
         await userService.updateUser(user.id, orderResult._id);
 
         res.status(201).json({
