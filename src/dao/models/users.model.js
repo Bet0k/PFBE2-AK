@@ -1,11 +1,15 @@
-import { Schema, model } from 'mongoose';
+import {
+    Schema,
+    model,
+    SchemaTypes
+} from "mongoose";
 
 const UserSchema = new Schema({
-    first_name:{
-        type: String, 
+    first_name: {
+        type: String,
         required: true
     },
-    last_name:{
+    last_name: {
         type: String,
         required: true
     },
@@ -13,6 +17,8 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+        // Valida el mail
+        match: [/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/, 'Por favor ingrese un correo válido.'] 
     },
     age: {
         type: Number
@@ -21,10 +27,14 @@ const UserSchema = new Schema({
     cart: {
         id: String,
     },
-    role:{
+    role: {
         type: String,
         default: "user",
-    }
+    },
+    orders: [{
+        type: SchemaTypes.ObjectId,
+        ref: "Orders"
+    }],
 });
 
 
